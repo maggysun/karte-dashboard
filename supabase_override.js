@@ -124,7 +124,7 @@ function addSignOutBtn() {
 // ── loadScore / saveScore ────────────────────────────────
 async function loadScore() {
   try {
-    const res = await sbFetch(SB_URL + '/rest/v1/tamashii_scores?fiscal_year=eq.' + FY_NUM + '&order=member_name,month', { method: 'GET' });
+    const res = await sbFetch(SB_URL + '/rest/v1/tamashii_scores?on_conflict=fiscal_year,member_name,month?fiscal_year=eq.' + FY_NUM + '&order=member_name,month', { method: 'GET' });
     const rows = await res.json();
     if (!Array.isArray(rows)) throw new Error(JSON.stringify(rows));
     const d = blankData();
@@ -152,7 +152,7 @@ async function saveScore(memberName, moStr) {
 // ── loadFY / saveFY ──────────────────────────────────────
 async function loadFY() {
   try {
-    const res = await sbFetch(SB_URL + '/rest/v1/fy_checklist?fiscal_year=eq.' + FY_NUM, { method: 'GET' });
+    const res = await sbFetch(SB_URL + '/rest/v1/fy_checklist?on_conflict=fiscal_year,item_text?fiscal_year=eq.' + FY_NUM, { method: 'GET' });
     const rows = await res.json();
     if (!Array.isArray(rows)) throw new Error(JSON.stringify(rows));
     const checks = {};
